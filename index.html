@@ -179,6 +179,11 @@
           }.bind(this), 500)
         }
 
+        findDanishVoice() {
+          const voices = speechSynthesis.getVoices()
+          return voices.find(({lang}) => lang === "da-DK")
+        }
+
         formatMinutesAsWords(minutes) {
           if (minutes < 10) {
             return `nul ${minutes}`
@@ -205,6 +210,7 @@
           let utterance = new SpeechSynthesisUtterance(message);
           utterance.lang = "da-DK"
           utterance.rate = 0.8
+          utterance.voice = this.findDanishVoice()
           speechSynthesis.speak(utterance);
         }
 
