@@ -47,11 +47,18 @@
         left: 1em;
         position: absolute;
         top: 1em;
+        transition: all 0.2s;
       }
       .logo svg {
         display: block;
         height: 42px;
         width: 42px;
+      }
+      body[data-active=false] .logo {
+        opacity: 0.8
+      }
+      body[data-active=true] .logo {
+        opacity: 1
       }
 
       .subtitles {
