@@ -224,13 +224,8 @@
           let secondsRounded = Math.floor(seconds / 10) * 10
 
           this.deactivateIfSpeechIsNotWorking()
-          this.speak(hours)
-          this.speak(". ")
-          this.speak(minutesAsWords)
-          this.speak(". ")
-          this.speak(`og ${secondsRounded}`)
-          this.speak(". ")
-          this.speak("dut.")
+
+          this.speak(`${hours}, ${minutesAsWords}, og ${secondsRounded}, dut.`)
           this.showSubtitles(`${hours} ${minutes} og ${secondsRounded}. Dut.`);
         }
 
