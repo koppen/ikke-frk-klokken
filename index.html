@@ -7,6 +7,12 @@
     <title>Frk. Klokken'ish</title>
 
     <style>
+      :root {
+        --active-opacity: 1;
+        --inactive-opacity: 0.7;
+        --interaction-transition-duration: 0.2s;
+      }
+
       body {
         background: #000000;
         color: #dddddd;
@@ -19,7 +25,7 @@
         background: transparent;
         border: 0;
         display: block;
-        transition: all 0.2s;
+        transition: all var(--interaction-transition-duration);
         padding: 0;
       }
 
@@ -48,7 +54,7 @@
         left: 1em;
         position: absolute;
         top: 1em;
-        transition: all 0.2s;
+        transition: all var(--interaction-transition-duration);
       }
       .logo svg {
         display: block;
@@ -56,10 +62,10 @@
         width: 42px;
       }
       body[data-active=false] .logo {
-        opacity: 0.8
+        opacity: var(--inactive-opacity)
       }
       body[data-active=true] .logo {
-        opacity: 1
+        opacity: var(--active-opacity)
       }
 
       .subtitles {
@@ -83,7 +89,7 @@
         width: 42px;
       }
       body[data-subtitles=false] button.toggleSubtitles {
-        opacity: 0.7;
+        opacity: var(--inactive-opacity);
       }
       body[data-subtitles=false] .subtitles {
         opacity: 0
