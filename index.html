@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+  </head>
+  <body>
+    <button>Speak!</button>
+
+    <script>
+      function speak(message) {
+        const voices = speechSynthesis.getVoices()
+        const danishSpeaker = voices.find(({lang}) => lang === "da-DK")
+
+        let utterance = new SpeechSynthesisUtterance(message);
+        if (danishSpeaker) {
+          utterance.voice = danishSpeaker
+        }
+
+        speechSynthesis.speak(utterance);
+      }
+
+      function speakTheTime() {
+        let currentDate = new Date()
+        let hours = currentDate.getHours()
+        let minutes = currentDate.getMinutes()
+        let seconds = currentDate.getSeconds()
+
+        let secondsRounded = Math.round(seconds / 10) * 10
+
+        speak(hours)
+        speak(minutes)
+        speak(`og ${secondsRounded}`)
+        speak("dut.")
+      }
+
+      document.querySelector("button").addEventListener("click", speakTheTime)
+    </script>
+  </body>
+</html>
