@@ -24,6 +24,7 @@
       }
 
       .launcher {
+        opacity: 0;
         transition: all 1s;
       }
       .launcher button {
@@ -111,9 +112,25 @@
           setInterval(this.speakTheTime.bind(this), 10000)
         }
 
+        activateIfSpeechIsWorking() {
+          // Wait a bit, then check if we're speaking. If not, something isn't
+          // working and the user might need to active manually.
+          setTimeout(function() {
+            if (speechSynthesis.speaking) {
+              this.active = true
+            } else {
+              this.active = false
+            }
+            this.updateUI()
+          }.bind(this), 500)
+        }
+
         connect() {
-          this.active = false
+          this.active = true
           this.subtitles = false
+
+          this.speakTheTime()
+          this.activateIfSpeechIsWorking()
 
           this.updateUI()
         }
