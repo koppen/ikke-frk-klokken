@@ -1,6 +1,19 @@
 # Ikke Frk. Klokken
 
+Den 30. november forstummer et national klenodie, når Frøken Klokken annoncerer
+sit sidste klokkeslæt.
+
+Derfor er der her en emulering af Frøken Klokken, så vi alle kan mindes dagene,
+hvor vi kunne ringe til et telefonnummer og få fortalt det nøjagtige klokkeslæt.
+
 Efter idé af [Bjarne Tveskov](https://twitter.com/tveskov/status/1462344048249876481).
+
+## This is just a tribute
+
+* Det er ikke de rigtige indspilninger, der bliver afspillet. Vi kan desværre
+  ikke nyde Marianne Germers stemme døgnet rundt på denne måde.
+* Vi snyder og bruger din lokale tid. Du kan altså ikke rigtigt bruge Ikke Frk.
+  Klokken til at stille dit ur efter.
 
 ## Referencer
 
