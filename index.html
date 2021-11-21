@@ -19,6 +19,7 @@
         font-weight: bold;
         position: absolute;
         text-align: center;
+        transition: all 1s;
         width: 100%;
       }
 
@@ -64,9 +65,17 @@
           this.updateUI()
         }
 
+        hideSubtitles() {
+          if (this.subtitles && this.subtitlesTarget) {
+            this.subtitlesTarget.style.opacity = 0
+          }
+        }
+
         showSubtitles(message) {
           if (this.subtitles && this.subtitlesTarget) {
+            this.subtitlesTarget.style.opacity = 1
             this.subtitlesTarget.innerHTML = message
+            setTimeout(this.hideSubtitles.bind(this), 5000)
           }
         }
 
