@@ -21,6 +21,31 @@
         text-align: center;
         width: 100%;
       }
+
+      .controls {
+        position: absolute;
+        right: 2em;
+        top: 1em;
+      }
+      .controls button {
+        appearance: none;
+        color: #dddddd;
+        background: transparent;
+        border: 0;
+        width: 3em;
+      }
+      body[data-subtitles=false] button.toggleSubtitles {
+        opacity: 0.7;
+      }
+      body[data-subtitles=false] .subtitles {
+        opacity: 0
+      }
+      body[data-subtitles=true] button.toggleSubtitles {
+        opacity: 1;
+      }
+      body[data-subtitles=true] .subtitles {
+        opacity: 1
+      }
     </style>
 
     <script type="module">
@@ -31,10 +56,11 @@
         static targets = [ "subtitles" ]
 
         connect() {
-          this.subtitles = true
+          this.subtitles = false
 
           setInterval(this.speakTheTime.bind(this), 10000)
           this.speakTheTime()
+          this.updateUI()
         }
 
         showSubtitles(message) {
@@ -64,11 +90,26 @@
           this.speak("dut.")
           this.showSubtitles(`${hours} ${minutes} og ${secondsRounded}. Dut.`);
         }
+
+        toggleSubtitles() {
+          this.subtitles = !this.subtitles
+          this.updateUI()
+        }
+
+        updateUI() {
+          this.element.dataset.subtitles = this.subtitles
+        }
       })
     </script>
   </head>
   <body data-controller="klokken">
     <button data-action="klokken#speakTheTime">Speak!</button>
+
+    <div class="controls">
+      <button class="toggleSubtitles" data-action="klokken#toggleSubtitles">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 8h10M7 12h4m1 8l-4-4H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-3l-4 4z"></path></svg>
+      </button>
+    </div>
 
     <div class="subtitles" data-klokken-target="subtitles"></div>
   </body>
