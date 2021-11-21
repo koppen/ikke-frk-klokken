@@ -44,7 +44,7 @@
         let minutes = currentDate.getMinutes()
         let seconds = currentDate.getSeconds()
 
-        let secondsRounded = Math.round(seconds / 10) * 10
+        let secondsRounded = Math.floor(seconds / 10) * 10
 
         speak(hours)
         speak(minutes)
