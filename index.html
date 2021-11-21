@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="da-DK">
   <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -11,14 +11,8 @@
 
     <script>
       function speak(message) {
-        const voices = speechSynthesis.getVoices()
-        const danishSpeaker = voices.find(({lang}) => lang === "da-DK")
-
         let utterance = new SpeechSynthesisUtterance(message);
-        if (danishSpeaker) {
-          utterance.voice = danishSpeaker
-        }
-
+        utterance.lang = "da-DK"
         speechSynthesis.speak(utterance);
       }
 
