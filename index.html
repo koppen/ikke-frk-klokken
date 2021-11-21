@@ -113,32 +113,39 @@
           this.active = true
 
           this.speakTheTime()
+          this.startInterval()
           this.updateUI()
-
-          setInterval(this.speakTheTime.bind(this), 10000)
-        }
-
-        activateIfSpeechIsWorking() {
-          // Wait a bit, then check if we're speaking. If not, something isn't
-          // working and the user might need to active manually.
-          setTimeout(function() {
-            if (speechSynthesis.speaking) {
-              this.active = true
-            } else {
-              this.active = false
-            }
-            this.updateUI()
-          }.bind(this), 500)
         }
 
         connect() {
           this.active = true
           this.subtitles = false
 
-          this.speakTheTime()
-          this.activateIfSpeechIsWorking()
+          this.activate()
+        }
+
+        deactivate() {
+          this.active = false
+
+          if (this.interval) {
+            clearInterval(this.interval)
+            this.interval = undefined
+          }
 
           this.updateUI()
+        }
+
+        deactivateIfSpeechIsNotWorking() {
+          // Wait a bit, then check if we're speaking. If not, something isn't
+          // working and the user might need to active manually.
+          setTimeout(function() {
+            if (speechSynthesis.speaking) {
+              this.active = true
+            } else {
+              this.deactivate()
+            }
+            this.updateUI()
+          }.bind(this), 500)
         }
 
         hideSubtitles() {
@@ -170,11 +177,27 @@
 
           let secondsRounded = Math.floor(seconds / 10) * 10
 
+          this.deactivateIfSpeechIsNotWorking()
           this.speak(hours)
           this.speak(minutes)
           this.speak(`og ${secondsRounded}`)
           this.speak("dut.")
           this.showSubtitles(`${hours} ${minutes} og ${secondsRounded}. Dut.`);
+        }
+
+        startInterval() {
+          if (this.interval) return;
+
+
+          this.interval = setInterval(this.speakTheTime.bind(this), 10000)
+        }
+
+        toggleActive() {
+          if (this.active) {
+            this.deactivate()
+          } else {
+            this.activate()
+          }
         }
 
         toggleSubtitles() {
@@ -191,7 +214,7 @@
   </head>
   <body data-controller="klokken">
     <div class="logo">
-      <button class="control-button" data-action="klokken#speakTheTime">
+      <button class="control-button" data-action="klokken#toggleActive">
         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
       </button>
     </div>
