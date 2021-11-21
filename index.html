@@ -148,6 +148,14 @@
           }.bind(this), 500)
         }
 
+        formatMinutesAsWords(minutes) {
+          if (minutes < 10) {
+            return `nul ${minutes}`
+          } else {
+            return minutes.toString()
+          }
+        }
+
         hideSubtitles() {
           if (this.subtitles && this.subtitlesTarget) {
             this.subtitlesTarget.style.opacity = 0
@@ -175,11 +183,12 @@
           let minutes = currentDate.getMinutes()
           let seconds = currentDate.getSeconds()
 
+          let minutesAsWords = this.formatMinutesAsWords(minutes)
           let secondsRounded = Math.floor(seconds / 10) * 10
 
           this.deactivateIfSpeechIsNotWorking()
           this.speak(hours)
-          this.speak(minutes)
+          this.speak(minutesAsWords)
           this.speak(`og ${secondsRounded}`)
           this.speak("dut.")
           this.showSubtitles(`${hours} ${minutes} og ${secondsRounded}. Dut.`);
