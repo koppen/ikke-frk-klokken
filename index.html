@@ -10,12 +10,27 @@
       body {
         background: #000000;
       }
+
+      #subtitles {
+        color: #ffffff;
+      }
     </style>
   </head>
   <body>
     <button>Speak!</button>
 
+    <div class="subtitles" id="subtitles"></div>
+
     <script>
+      let subtitles = true;
+
+      function showSubtitles(message) {
+        const subtitlesOutlet = document.getElementById("subtitles")
+        if (subtitlesOutlet) {
+          subtitlesOutlet.innerHTML = message
+        }
+      }
+
       function speak(message) {
         let utterance = new SpeechSynthesisUtterance(message);
         utterance.lang = "da-DK"
@@ -35,6 +50,7 @@
         speak(minutes)
         speak(`og ${secondsRounded}`)
         speak("dut.")
+        showSubtitles(`${hours} ${minutes} og ${secondsRounded}. Dut.`);
       }
 
       document.querySelector("button").addEventListener("click", speakTheTime)
