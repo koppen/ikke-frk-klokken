@@ -15,46 +15,59 @@
         color: #ffffff;
       }
     </style>
+
+    <script type="module">
+      import { Application, Controller } from "https://unpkg.com/@hotwired/stimulus/dist/stimulus.js"
+      window.Stimulus = Application.start()
+
+      Stimulus.register("klokken", class extends Controller {
+        static targets = [ "name" ]
+
+        connect() {
+          this.subtitles = true
+
+          setInterval(this.speakTheTime.bind(this), 10000)
+          this.speakTheTime()
+
+          document.querySelector("button").addEventListener("click", this.speakTheTime.bind(this))
+        }
+
+        showSubtitles(message) {
+          const subtitlesOutlet = document.getElementById("subtitles")
+          if (subtitlesOutlet) {
+            subtitlesOutlet.innerHTML = message
+          }
+        }
+
+        speak(message) {
+          let utterance = new SpeechSynthesisUtterance(message);
+          utterance.lang = "da-DK"
+          utterance.rate = 0.8
+          speechSynthesis.speak(utterance);
+        }
+
+        speakTheTime() {
+          let currentDate = new Date()
+          let hours = currentDate.getHours()
+          let minutes = currentDate.getMinutes()
+          let seconds = currentDate.getSeconds()
+
+          let secondsRounded = Math.floor(seconds / 10) * 10
+
+          this.speak(hours)
+          this.speak(minutes)
+          this.speak(`og ${secondsRounded}`)
+          this.speak("dut.")
+          this.showSubtitles(`${hours} ${minutes} og ${secondsRounded}. Dut.`);
+        }
+
+
+      })
+    </script>
   </head>
-  <body>
+  <body data-controller="klokken">
     <button>Speak!</button>
 
     <div class="subtitles" id="subtitles"></div>
-
-    <script>
-      let subtitles = true;
-
-      function showSubtitles(message) {
-        const subtitlesOutlet = document.getElementById("subtitles")
-        if (subtitlesOutlet) {
-          subtitlesOutlet.innerHTML = message
-        }
-      }
-
-      function speak(message) {
-        let utterance = new SpeechSynthesisUtterance(message);
-        utterance.lang = "da-DK"
-        utterance.rate = 0.8
-        speechSynthesis.speak(utterance);
-      }
-
-      function speakTheTime() {
-        let currentDate = new Date()
-        let hours = currentDate.getHours()
-        let minutes = currentDate.getMinutes()
-        let seconds = currentDate.getSeconds()
-
-        let secondsRounded = Math.floor(seconds / 10) * 10
-
-        speak(hours)
-        speak(minutes)
-        speak(`og ${secondsRounded}`)
-        speak("dut.")
-        showSubtitles(`${hours} ${minutes} og ${secondsRounded}. Dut.`);
-      }
-
-      document.querySelector("button").addEventListener("click", speakTheTime)
-      setInterval(speakTheTime, 10000)
-    </script>
   </body>
 </html>
