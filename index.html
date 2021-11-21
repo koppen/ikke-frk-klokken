@@ -219,8 +219,11 @@
 
           this.deactivateIfSpeechIsNotWorking()
           this.speak(hours)
+          this.speak(". ")
           this.speak(minutesAsWords)
+          this.speak(". ")
           this.speak(`og ${secondsRounded}`)
+          this.speak(". ")
           this.speak("dut.")
           this.showSubtitles(`${hours} ${minutes} og ${secondsRounded}. Dut.`);
         }
