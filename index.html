@@ -9,10 +9,7 @@
     <style>
       body {
         background: #000000;
-      }
-
-      #subtitles {
-        color: #ffffff;
+        color: #dddddd;
       }
     </style>
 
@@ -21,7 +18,7 @@
       window.Stimulus = Application.start()
 
       Stimulus.register("klokken", class extends Controller {
-        static targets = [ "name" ]
+        static targets = [ "subtitles" ]
 
         connect() {
           this.subtitles = true
@@ -33,9 +30,8 @@
         }
 
         showSubtitles(message) {
-          const subtitlesOutlet = document.getElementById("subtitles")
-          if (subtitlesOutlet) {
-            subtitlesOutlet.innerHTML = message
+          if (this.subtitles && this.subtitlesTarget) {
+            this.subtitlesTarget.innerHTML = message
           }
         }
 
@@ -60,14 +56,12 @@
           this.speak("dut.")
           this.showSubtitles(`${hours} ${minutes} og ${secondsRounded}. Dut.`);
         }
-
-
       })
     </script>
   </head>
   <body data-controller="klokken">
     <button>Speak!</button>
 
-    <div class="subtitles" id="subtitles"></div>
+    <div class="subtitles" data-klokken-target="subtitles"></div>
   </body>
 </html>
