@@ -194,6 +194,8 @@
           // Wait a bit, then check if we're speaking. If not, something isn't
           // working and the user might need to active manually.
           setTimeout(function() {
+            if (!this.isSpeechSynthesisAvailable()) return;
+
             if (speechSynthesis.speaking) {
               this.active = true
             } else {
@@ -204,6 +206,8 @@
         }
 
         findDanishVoice() {
+          if (!this.isSpeechSynthesisAvailable()) return;
+
           const voices = speechSynthesis.getVoices()
           return voices.find(({lang}) => lang === "da-DK")
         }
@@ -241,6 +245,8 @@
         }
 
         speak(message) {
+          if (!this.isSpeechSynthesisAvailable()) return;
+
           let utterance = new SpeechSynthesisUtterance(message);
           utterance.lang = "da-DK"
           utterance.rate = 0.8
